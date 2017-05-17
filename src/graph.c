@@ -1,5 +1,6 @@
 #include "../lib/graph.h"
 
+
 /****************************
  * Role: Create a new graph *
  * n : lenght of the graph  *
@@ -29,14 +30,13 @@ graph* createGraph (const int n){
 
 /************************************************
  * Role: Create a new edge between src and dest *
- * src: In fact, there's no really a source     *
- * dest: nor a destination, they add each other *
+ * src: the node which is add a neighbour       *
+ * dest: the neighbour to add into src          *
  ************************************************/
-void addEdge (node *src, node *dest){
+void addEdge (node *src, const node *dest){
   element *newElement_src = malloc(sizeof(struct element_s));
-  element *newElement_dest = malloc(sizeof(struct element_s));
   
-  if(newElement_src == NULL || newElement_dest == NULL){
+  if(newElement_src == NULL){
       printf("Erreur: Creating new edge\n");
       exit(ERR_ADD_EDGE);
   }
@@ -45,11 +45,6 @@ void addEdge (node *src, node *dest){
   newElement_src->next = src->head;
   src->nb_members++;
   src->head = newElement_src;
-  
-  newElement_dest->n = (*src);
-  newElement_dest->next = dest->head;
-  dest->nb_members++;
-  dest->head = newElement_dest;
 }
  
 /*************************************************
@@ -96,10 +91,13 @@ void linkGraph (graph *g){
     
   // GENERIC
   for (i = 0; i < g->nb_nodes; i++)
-    for (j = (i / n) - 1; j < (i / n) + 1; j++)
-      for (k = (i % n) - 1; k < (i % n) + 1; k++)
-        if (j >= 0 && j < n && k >= 0 && k < n && (n * j + k) != i) 
-	addEdge(&g->grph[i], &g->grph[n * j + k]);
+    for (j = (i / n) - 1; j <= (i / n) + 1; j++)
+      for (k = (i % n) - 1; k <= (i % n) + 1; k++)
+        if (j >= 0 && j < n && k >= 0 && k < n)
+	if ((j == (i/n) - 1 && k == (i%n)) || (j == (i/n) - 1 && k == (i%n) + 1) || (j == (i/n) && k == (i%n) - 1) ||
+	    (j == (i/n) && k == (i%n) + 1) || (j == (i/n) + 1 && k == (i%n) - 1) || (j == (i/n) + 1 && k == (i%n)))
+	  addEdge(&g->grph[i], &g->grph[n * j + k]);
+	
 }
 
 

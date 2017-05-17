@@ -3,11 +3,11 @@
 #include "../lib/group.h"
 #include "../lib/board.h"
 
-
 int main (){
-  board b = createBoard(3);
-  displayGraph(&b.brd);
-  displayBoard(&b);
+   board b = createBoard(3);
+   displayGraph(&b.brd);
+   displayBoard(&b);
+
   
   return OK;
 }
