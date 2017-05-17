@@ -220,30 +220,28 @@ void linkGraph (graph *g){
   node *W2 = createNode(2001);	// Right
   
   int n = sqrt(g->nb_nodes);
-  int i, j;
+  int i, j, k;
  
+  //BORDERS
   for (i = 0; i < g->nb_nodes; i = i + n) 	// link left and right borders
   {
     addEdge(&g->grph[i], W1);
     addEdge(&g->grph[i + n - 1], W2);
   }
-
   for (i = 0; i < n; i++)		// link top border
     addEdge(&g->grph[i], B1);
-  
   for (i = g->nb_nodes; i > g->nb_nodes - n; i--)		// link bot border
     addEdge(&g->grph[i], B2);
     
-  for (i = n; i < g->nb_nodes; i = i + n){	
-     for(j = 0; j < n; j++){
-        addEdge(&g->grph[i + j], &g->grph[i + j - n]); // link upper node
-     }
-     
-     for(j = 0; j < n - 1; j++){
-        addEdge(&g->grph[i + j], &g->grph[i + j + 1]); 	 // link right node
-        addEdge(&g->grph[i + j], &g->grph[i + j - n + 1]); 	 // link diagonal upper right
-     }
-  }
+  // GENERIC
+  for (i = 0; i < g->nb_nodes; i++)
+    for (j = (i / n) - 1; j < (i / n) + 1; j++)
+      for (k = (i % n) - 1; k < (i % n) + 1; k++)
+        if (j >= 0 && j < n && k >= 0 && k < n && (n * j + k) != i) 
+	addEdge(&g->grph[i], &g->grph[n * j + k]);
+	
+	
+
 }
 
 /****************************
@@ -282,11 +280,9 @@ void displayBoard(const board *b){
 
 int main ()
 {
-  board b = createBoard(8);
+  board b = createBoard(3);
   displayGraph(&b.brd);
   displayBoard(&b);
-  
-  //Regarde je met un commentaire dans le main là
   
   return 0;
 }
