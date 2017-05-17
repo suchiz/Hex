@@ -286,6 +286,8 @@ int main ()
   displayGraph(&b.brd);
   displayBoard(&b);
   
+  //Regarde je met un commentaire dans le main là
+  
   return 0;
 }
 
