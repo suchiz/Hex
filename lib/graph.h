@@ -35,10 +35,10 @@ graph* createGraph (const int n);
 
 /************************************************
  * Role: Create a new edge between src and dest *
- * src: In fact, there's no really a source     *
- * dest: nor a destination, they add each other *
+ * src: the node which is add a neighbour       *
+ * dest: the neighbour to add into src          *
  ************************************************/
-void addEdge (node *src, node *dest);
+void addEdge (node *src, const node *dest);
 
 /*************************************************
  * Role: Display a graph, may be useful to unbug *

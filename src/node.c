@@ -21,7 +21,7 @@ node* createNode (const int id){
 }
 
 /*************************************************
- * Role: Display a list, may be useful to unbug *
+ * Role: Display a list, may be useful to unbug  *
  * n : node with the list to display	         *
  *************************************************/  
 void displayNeighboursList (const node *n){

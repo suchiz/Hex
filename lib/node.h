@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
+#include <stdbool.h>
 
 /********************
  * ERROR DEFINITION *
@@ -42,10 +43,9 @@ typedef struct element_s //element for list implementation
 node* createNode (const int id);
 
 /*************************************************
- * Role: Display a list, may be useful to unbug *
+ * Role: Display a list, may be useful to unbug  *
  * n : node with the list to display	         *
  *************************************************/  
 void displayNeighboursList (const node *n);
-
 
 #endif
