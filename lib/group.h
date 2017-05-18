@@ -4,10 +4,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-#include <stdbool.h>
 
 #include "node.h"
-
+#include "board.h"
 /********************
  * ERROR DEFINITION *
  ********************/
@@ -46,5 +45,10 @@ void addToGroup (group *g, const node *nodeToAdd);
  * g : the group to display	                   *
  *************************************************/
 void displayGroup (const group *g);
+
+
+group* fusion(group* group1,group* group2);
+
+group* generateGroup(board *b,const node *n);
 
 #endif
