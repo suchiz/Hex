@@ -67,3 +67,48 @@ void displayGroup (const group *g){
   }
   printf("\n");
 }
+
+group* fusion(group* group1, group* group2){
+ element* current=group2->head;
+ while(current!=NULL){
+     addToGroup(group1,&current->n);
+     current=current->next;
+ }
+ 
+  return group1;  
+}
+
+
+group* generateGroup(board *b ,const node *n){
+    
+   group *newGroup = createGroup(n->color);
+   addToGroup(newGroup,n);
+    
+   /*check neighbours color group*/
+   element *current = n->head;
+   int id;
+   
+   while(current != NULL){
+       id = current->n.id;
+       printf ("%d %c / ",id, current->n.color);
+
+            if(b->brd.grph[id].color==n->color){
+           addToGroup(newGroup,&b->brd.grph[id]);
+            }
+        
+            if(current->n.color==n->color){
+                printf("ON AJOUTE le noeud du bord  %d \n",n->id);
+                addToGroup(newGroup,&current->n);
+       }
+    current = current->next;
+   }
+    
+ return newGroup; 
+}
+
+
+
+
+
+
+

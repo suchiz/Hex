@@ -71,9 +71,13 @@ void displayGraph (const graph *g){
  ***********************************/ 
 void linkGraph (graph *g){
   node *B1 = createNode(1000); 	// Top
+  B1->color='x';
   node *B2 = createNode(1001);	// Bot
+  B2->color='x';
   node *W1 = createNode(2000);	// Left
-  node *W2 = createNode(2001);	// Right
+  W1->color='o';
+  node *W2 = createNode(2001);	// Right x
+  W2->color='o';
   
   int n = sqrt(g->nb_nodes);
   int i, j, k;
