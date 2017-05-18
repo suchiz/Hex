@@ -25,18 +25,28 @@ group* createGroup (const char color){
  * nodeToAdd : constant, no modification on it, member to add to the group *
  ***************************************************************************/
 void addToGroup (group *g, const node *nodeToAdd){
-  element *newElement = malloc(sizeof(struct element_s));
+  element *current = g->head;
+  bool notADup = true;
   
-  if(newElement == NULL){
-      printf("Erreur: Creating new element\n");
-      exit(ERR_CREATE_ELEMENT);
+  while(current != NULL && notADup){
+     notADup = current->n.id != nodeToAdd->id;
+     current = current->next;
   }
   
-  newElement->n = (*nodeToAdd);
-  newElement->next = g->head;
-  
-  g->length++;
-  g->head = newElement;
+  if (notADup){
+    element *newElement = malloc(sizeof(struct element_s));
+    
+    if(newElement == NULL){
+        printf("Erreur: Creating new element\n");
+        exit(ERR_CREATE_ELEMENT);
+    }
+    
+    newElement->n = (*nodeToAdd);
+    newElement->next = g->head;
+    
+    g->length++;
+    g->head = newElement;
+  }
 }
 
 /*************************************************
