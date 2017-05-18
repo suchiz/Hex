@@ -34,6 +34,7 @@ void jouer_coup(board *b, int *joueur, int *tour, element_group *eg){
 	
   group *g = generateGroup(b, &b->brd.grph[ind]);
   insertElemGroup(eg, g);
+  updateListGroup(eg);
   
   (*joueur) = ((*joueur) + 1) % 2;
   (*tour)++;

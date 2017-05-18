@@ -73,7 +73,11 @@ void displayGroup (const group *g){
  * g : the group to destroy *
  ****************************/
 void destroyGroup(group* group){
-  if(group != NULL){
+    if(group == NULL){
+        exit(EXIT_FAILURE);
+    }
+    
+    if(group != NULL){
     element* current=group->head;
     
     while(current != NULL){
@@ -81,6 +85,7 @@ void destroyGroup(group* group){
       current = current->next;
       free(tmp);        
     }
+
     free(group);    
   }
 }
@@ -112,7 +117,7 @@ group* generateGroup(const board *b, const node *n){
    /*check neighbours color group*/
    element *current = n->head;
    while(current != NULL){
-      if(b->brd.grph[current->n.id].color == n->color) 		//Add neighbours
+      if(b->brd.grph[current->n.id].color == n->color) 		//Add neighbours -> No need if use updateListGroup;
           addToGroup(newGroup, &b->brd.grph[current->n.id]);
       if (current->n.color == n->color)
         addToGroup(newGroup, &current->n);			//Add borders
@@ -155,6 +160,23 @@ void insertElemGroup (element_group *eg, const group *groupToAdd){
   
 }
 
+void destroyElemGroup (element_group *eg){
+    if (eg == NULL){
+        exit(EXIT_FAILURE);
+    }
+    
+    if (eg->next !=NULL){
+        element_group *current=eg->next;
+        while(current != NULL){
+        element_group *tmp=current;
+        current=current->next;
+        free(tmp);
+        }
+    }
+   // free(eg);
+}
+        
+
 /**********************************
  * Role: Display a list of groups *
  * eg : the list to display	    *
@@ -165,7 +187,7 @@ void displayListGroup (const element_group *eg){
  
   element_group *current = eg->next;
   
-  printf ("\nLENGTH: %d\n", eg->size);
+  printf ("\nLENGTH LIST: %d\n", eg->size);
   printf ("MEMBERS: \n");
   while(current != NULL){
      printf("color: %c ", current->grp.color);
@@ -203,14 +225,77 @@ void updateListGroup (element_group *eg){
   while (eg != NULL){
      element_group *current = eg->next;
      while(current != NULL){
-        //if (eg->grp.color == current->grp.color && adjacentGroup(&eg->grp, &current->grp))
-       printf ("loop \n");
-	//displayGroup(&eg->grp);
-	displayGroup(&current->grp);
+        if (eg->grp.color == current->grp.color && adjacentGroup(&eg->grp, &current->grp)){
+            
+             displayGroup(&current->grp);
+            fusion(&eg->grp, &current->grp);
+           
+          //destroyElemGroup(current);
+            updateListGroup(eg);
+        }
+       
         current = current->next;
     }
     eg = eg->next;
   }
   
+}
 
+
+
+
+char winning_group(element_group* eg){
+    
+    bool noeud_deb_o = false;
+    bool noeud_fin_o = false;
+    bool noeud_deb_x = false;
+    bool noeud_fin_x = false;
+    while(eg != NULL)
+    {
+        while(eg->grp.head != NULL)
+        {
+            if(eg->grp.head->n.id == 1000) {
+                noeud_deb_o = true;
+            }
+            if(eg->grp.head->n.id == 1001) {
+                noeud_fin_o = true;
+            }
+            if(eg->grp.head->n.id == 2000) {
+                noeud_deb_x = true;
+            }
+            if(eg->grp.head->n.id == 2001) {
+                noeud_fin_x = true;
+            }
+            eg->grp.head = eg->grp.head->next;
+        }
+
+        if(noeud_deb_o && noeud_fin_o) {
+            return 'o';
+        }
+        else if(noeud_deb_x && noeud_fin_x) {
+            return 'x';
+        }
+
+        noeud_deb_o = false;
+        noeud_fin_o = false;
+        noeud_deb_x = false;
+        noeud_fin_x = false;
+
+        eg = eg->next;
+    }
+    return '.';
+}
+
+int winner(element_group* eg){
+    
+    char win = winning_group(eg);
+    if(win == 'o') {
+        printf("White player won the game !\n");
+        return 1;
+    }
+    else if(win == 'x') {
+        printf("Black player won the game !\n");
+        return 2;
+    }
+    return 0;
 }
