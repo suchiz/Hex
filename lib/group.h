@@ -83,20 +83,27 @@ element_group* createListGroup ();
 
 /**********************************************
  * Role: insert a group into a list of groups *
- * eg : the list we insert into	      *
+ * eg : the list we insert into	              *
  * groupToAdd: the group to add               *
  **********************************************/
 void insertElemGroup (element_group *eg, const group* groupToAdd);
 
+/********************************************
+ * Role: Destroy an element of element_group*
+ * eg : the element_group to destroy        *
+ ********************************************/
+void destroyElemGroup (element_group *eg);
+
+
 /**********************************
  * Role: Display a list of groups *
- * eg : the list to display	    *
+ * eg : the list to display	  *
  **********************************/
 void displayListGroup (const element_group *eg);
 
 /**************************************************************
  * Role: Merge groups of the list if they have the same color *
- * eg : the list to update 		         	            *
+ * eg : the list to update 		         	      *
  **************************************************************/
 void updateListGroup (element_group *eg);
 
@@ -105,4 +112,11 @@ void updateListGroup (element_group *eg);
  ****************************************************************/
 int adjacentGroup (const group *g1, const group *g2);
   
+
+
+char winning_group(element_group* eg);
+
+int winner(element_group* eg);
+
+
 #endif
