@@ -4,29 +4,46 @@
 #include "../lib/board.h"
 #include "../lib/jouer.h"
 
+/*int main (){
+
+  board b = createBoard(3);
+  element_group *eg = createListGroup();
+  int joueur = 0;
+  int tour = 1;
+  
+  printf(" JEU HEX : ");
+  displayBoard(&b);
+
+  while(tour <= 10){  //mettre condition gagnent
+    
+      printf("\n Tour n°%d (joueur %d): ", tour, joueur + 1);
+      jouer_coup (&b, &joueur, &tour, eg);
+      displayBoard(&b);
+    
+  }
+  
+  return OK;
+}*/
+
 int main (){
+  element_group *eg = createListGroup();
+  group* groupToAdd = createGroup('x');
+  group* groupToAdd2 = createGroup('o');
+  group* groupToAdd3 = createGroup('o');
+  node * n = createNode(2);
+  node * n2 = createNode(3);
+  addToGroup(groupToAdd, n);
+  addToGroup(groupToAdd2, n);
+  addToGroup(groupToAdd3, n2);
+  insertElemGroup (eg, groupToAdd);
+  insertElemGroup (eg, groupToAdd2);
+  insertElemGroup (eg, groupToAdd3);
+  printf("adjacent: %d\n", adjacentGroup(groupToAdd, groupToAdd2));
+  printf("adjacent: %d\n", adjacentGroup(groupToAdd, groupToAdd3));
+  displayListGroup(eg);
   
-   board b = createBoard(3);
-   displayGraph(&b.brd);
-   displayBoard(&b);
-
-   group* g=createGroup('.');
-  addToGroup(g,&b.brd.grph[2]);
-
-
-group* g1=createGroup('l');
-addToGroup(g1,&b.brd.grph[3]);
-addToGroup(g1,&b.brd.grph[5]);
-
-displayGroup(g1);
-displayGroup(g);
-  
-
-g1=fusion(g1,g);
-
-displayGroup(g1);
-displayGroup(g);
-  
+  updateListGroup(eg);
+  displayListGroup(eg);
   
   return OK;
 }

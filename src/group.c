@@ -68,47 +68,149 @@ void displayGroup (const group *g){
   printf("\n");
 }
 
-group* fusion(group* group1, group* group2){
- element* current=group2->head;
- while(current!=NULL){
-     addToGroup(group1,&current->n);
-     current=current->next;
- }
- 
-  return group1;  
+/****************************
+ * Role: Destroy a group    *
+ * g : the group to destroy *
+ ****************************/
+void destroyGroup(group* group){
+  if(group != NULL){
+    element* current=group->head;
+    
+    while(current != NULL){
+      element* tmp=current;
+      current = current->next;
+      free(tmp);        
+    }
+    free(group);    
+  }
 }
 
+/*******************************************
+ * Role: Merge group2 into group1          *
+ * group1: group resulting from merge      *
+ * group2: group destroyed after the merge *
+ *******************************************/
+void fusion(group* group1, group* group2){ 
+  element* current = group2->head;
+ 
+  while(current != NULL){
+     addToGroup(group1, &current->n);
+     current=current->next;
+  }
+  destroyGroup(group2);
+}
 
-group* generateGroup(board *b ,const node *n){
-    
+/*************************************************
+ * Role: Generate a group for the node we played *
+ * b: the board we are playing in 	         *
+ * n: the node we played		         *
+ *************************************************/
+group* generateGroup(const board *b, const node *n){
    group *newGroup = createGroup(n->color);
-   addToGroup(newGroup,n);
+   addToGroup(newGroup, n);
     
    /*check neighbours color group*/
    element *current = n->head;
-   int id;
-   
    while(current != NULL){
-       id = current->n.id;
-       printf ("%d %c / ",id, current->n.color);
-
-            if(b->brd.grph[id].color==n->color){
-           addToGroup(newGroup,&b->brd.grph[id]);
-            }
+      if(b->brd.grph[current->n.id].color == n->color) 		//Add neighbours
+          addToGroup(newGroup, &b->brd.grph[current->n.id]);
+      if (current->n.color == n->color)
+        addToGroup(newGroup, &current->n);			//Add borders
         
-            if(current->n.color==n->color){
-                printf("ON AJOUTE le noeud du bord  %d \n",n->id);
-                addToGroup(newGroup,&current->n);
-       }
-    current = current->next;
+      current = current->next;
    }
-    
- return newGroup; 
+  return newGroup; 
 }
 
+/*************************************
+ * Role: Create a new list of groups *
+ *************************************/
+element_group* createListGroup (){
+  element_group *eg = malloc(sizeof(struct element_group_s));
+  
+  eg->next = NULL;
+  eg->size = 0;
+  
+  return eg;
+}
 
+/**********************************************
+ * Role: insert a group into a list of groups *
+ * eg : the list we insert into	      *
+ * groupToAdd: the group to add               *
+ **********************************************/
+void insertElemGroup (element_group *eg, const group *groupToAdd){
+  element_group *newElement = malloc(sizeof(struct element_group_s));
+  
+  if(newElement == NULL){
+      printf("Erreur: Creating new group\n");
+      exit(ERR_CREATE_GROUP);
+  }
+  
+  newElement->grp = (*groupToAdd);
+  newElement->next = eg->next;
+  
+  eg->size++;
+  eg->next = newElement;
+  
+}
 
+/**********************************
+ * Role: Display a list of groups *
+ * eg : the list to display	    *
+ **********************************/
+void displayListGroup (const element_group *eg){
+  if(eg == NULL)
+      printf ("List is empty\n");
+ 
+  element_group *current = eg->next;
+  
+  printf ("\nLENGTH: %d\n", eg->size);
+  printf ("MEMBERS: \n");
+  while(current != NULL){
+     printf("color: %c ", current->grp.color);
+     displayGroup(&current->grp);
+     current = current->next;
+  }
+  printf("\n");
+}
 
+/****************************************************************
+ * Role: return 1 if g1 and g2 have at least one node in common *
+ ****************************************************************/
+int adjacentGroup (const group *g1, const group *g2){
+  element* current1 = g1->head;
+  int adjacent = 0;
+  
+  while (current1 != NULL && !adjacent){
+    element *current2 = g2->head;
+    while (current2 != NULL && !adjacent){
+      if (current1->n.id == current2->n.id)
+        adjacent++;
+      current2 = current2->next;
+    }
+    current1 = current1->next;
+  }
+  return adjacent;
+}
 
+/**************************************************************
+ * Role: Merge groups of the list if they have the same color *
+ * eg : the list to update 		         	            *
+ **************************************************************/
+void updateListGroup (element_group *eg){
+  
+  while (eg != NULL){
+     element_group *current = eg->next;
+     while(current != NULL){
+        //if (eg->grp.color == current->grp.color && adjacentGroup(&eg->grp, &current->grp))
+       printf ("loop \n");
+	//displayGroup(&eg->grp);
+	displayGroup(&current->grp);
+        current = current->next;
+    }
+    eg = eg->next;
+  }
+  
 
-
+}

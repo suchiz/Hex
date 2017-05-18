@@ -1,12 +1,14 @@
- #ifndef DEFINITION_JOUER
+#ifndef DEFINITION_JOUER
 #define DEFINITION_JOUER
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
+
 #include "board.h"
 #include "group.h"
+
 /********************
  * ERROR DEFINITION *
  ********************/
@@ -20,9 +22,9 @@
 
 int coordonnee(const board* b,int x,int y);
 
-int coup_valide(const board *b,const int x);
+int coup_valide(const board *b, int x, int y, int ind);
 
-int jouer_coup(board b,int joueur);
+void jouer_coup(board *b, int *joueur, int *tour, element_group *eg);
 
-int jouer();
+
 #endif

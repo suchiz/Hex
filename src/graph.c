@@ -71,13 +71,13 @@ void displayGraph (const graph *g){
  ***********************************/ 
 void linkGraph (graph *g){
   node *B1 = createNode(1000); 	// Top
-  B1->color='x';
+  B1->color ='o';
   node *B2 = createNode(1001);	// Bot
-  B2->color='x';
-  node *W1 = createNode(2000);	// Left
-  W1->color='o';
-  node *W2 = createNode(2001);	// Right x
-  W2->color='o';
+  B2->color='o';
+  node *W1  = createNode(2000);	// Left
+  W1->color ='x';
+  node *W2 = createNode(2001);	// Right 
+  W2->color ='x';
   
   int n = sqrt(g->nb_nodes);
   int i, j, k;
@@ -95,8 +95,8 @@ void linkGraph (graph *g){
     
   // GENERIC
   for (i = 0; i < g->nb_nodes; i++)
-    for (j = (i / n) - 1; j <= (i / n) + 1; j++)
-      for (k = (i % n) - 1; k <= (i % n) + 1; k++)
+    for (j = (i / n) - 1; j <= (i / n) + 1; j++)   //j = row
+      for (k = (i % n) - 1; k <= (i % n) + 1; k++) //k = col
         if (j >= 0 && j < n && k >= 0 && k < n)
 	if ((j == (i/n) - 1 && k == (i%n)) || (j == (i/n) - 1 && k == (i%n) + 1) || (j == (i/n) && k == (i%n) - 1) ||
 	    (j == (i/n) && k == (i%n) + 1) || (j == (i/n) + 1 && k == (i%n) - 1) || (j == (i/n) + 1 && k == (i%n)))
