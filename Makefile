@@ -5,7 +5,7 @@ EXEC=hex
 OBJDIR = obj
 SRCDIR = src
 
-STRUCT_O = group.o board.o node.o graph.o
+STRUCT_O = group.o board.o node.o graph.o jouer.o
 
 all: $(EXEC)
 
@@ -21,6 +21,10 @@ board.o: $(SRCDIR)/board.c
 node.o: $(SRCDIR)/node.c
 	$(CC) -o node.o -c $(SRCDIR)/node.c $(CFLAGS)
 	
+jouer.o:$(SRCDIR)/jouer.c
+	$(CC) -o jouer.o -c $(SRCDIR)/jouer.c $(CFLAGS)
+	
+
 main.o: $(SRCDIR)/main.c
 	$(CC) -o main.o -c $(SRCDIR)/main.c $(CFLAGS)
 	
