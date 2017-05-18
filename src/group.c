@@ -68,13 +68,33 @@ void displayGroup (const group *g){
   printf("\n");
 }
 
-group* fusion(group* group1, group* group2){
+
+void destroyGroup(group* group){
+    if(group){
+        
+    /*Free up thenodes*/
+    element* current=group->head;
+        while(current != NULL){
+            element* tmp=current;
+            current = current->next;
+            free(tmp);
+            
+        }
+    free(group);    
+    }
+}
+
+
+void fusion(group* group1, group* group2){ /*group2 = group to add*/
  element* current=group2->head;
+ 
  while(current!=NULL){
      addToGroup(group1,&current->n);
      current=current->next;
  }
  
+  destroyGroup(group2);
+
   return group1;  
 }
 
