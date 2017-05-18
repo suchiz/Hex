@@ -25,7 +25,20 @@ typedef struct group_s // group = evolved chain
     char color; 		// color of the group, may be white or black only
     int length;		// lenght of the group
     element *head;		// group/list/array of element;
+    struct tabGroup_s *first;
+    
 } group;
+
+/***************************
+ * STRUCTURE OF AN ELEMENT *
+ ***************************/
+typedef struct tabGroup_s
+{
+    group* group;		
+    struct tabGroup *next;   // pointer to the next group
+} tabGroup;
+
+
 
 /******************************
  * Role: Create a new group 	*
@@ -46,8 +59,11 @@ void addToGroup (group *g, const node *nodeToAdd);
  *************************************************/
 void displayGroup (const group *g);
 
+void destroyGroup(group* group);
 
-group* fusion(group* group1,group* group2);
+void fusion(group* group1,group* group2);
+
+void fusion(group* group1,group* group2);
 
 group* generateGroup(board *b,const node *n);
 
