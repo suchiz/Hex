@@ -26,5 +26,6 @@ int coup_valide(const board *b, int x, int y, int ind);
 
 void jouer_coup(board *b, int *joueur, int *tour, element_group *eg);
 
+void startGame();
 
 #endif

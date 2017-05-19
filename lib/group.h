@@ -107,16 +107,20 @@ void displayListGroup (const element_group *eg);
  **************************************************************/
 void updateListGroup (element_group *eg);
 
+/************************************************************************
+ * Role: return 1 if g1 and g2 have at least one adjency node in common *
+ ************************************************************************/
+int adjacentGroup (const group *g1, const group *g2);
+
 /****************************************************************
  * Role: return 1 if g1 and g2 have at least one node in common *
  ****************************************************************/
-int adjacentGroup (const group *g1, const group *g2);
-  
+int adjacentGroup2 (const group *g1, const group *g2);
 
-
-char winning_group(element_group* eg);
-
-int winner(element_group* eg);
+/******************************************************************************
+ * Role: return '.' if no winner found or 'o' or 'x' depending on the winner  *
+ ******************************************************************************/
+char winning_group(const element_group *eg);
 
 
 #endif
