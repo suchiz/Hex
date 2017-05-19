@@ -59,11 +59,13 @@ void displayGroup (const group *g){
  
   element *current = g->head;
   
-  printf ("\nLENGTH: %d\n", g->length);
-  printf ("MEMBERS: ");
+  printf ("\nLENGTH of GROUP: %d\n", g->length);
+  printf ("MEMBERS of GROUP: ");
   while(current != NULL){
      printf("%d, ", current->n.id);
+     
      current = current->next;
+     
   }
   printf("\n");
 }
@@ -102,7 +104,7 @@ void fusion(group* group1, group* group2){
      addToGroup(group1, &current->n);
      current=current->next;
   }
-  destroyGroup(group2);
+ 
 }
 
 /*************************************************
@@ -117,13 +119,17 @@ group* generateGroup(const board *b, const node *n){
    /*check neighbours color group*/
    element *current = n->head;
    while(current != NULL){
-      if(b->brd.grph[current->n.id].color == n->color) 		//Add neighbours -> No need if use updateListGroup;
-          addToGroup(newGroup, &b->brd.grph[current->n.id]);
-      if (current->n.color == n->color)
+       if(b->brd.grph[current->n.id].color == n->color) 		//Add neighbours -> No need if use updateListGroup;
+           addToGroup(newGroup, &b->brd.grph[current->n.id]);
+     if (current->n.color == n->color)
+      //updateListGroup(&b->brd.grph[current->n.id]);
         addToGroup(newGroup, &current->n);			//Add borders
         
       current = current->next;
    }
+   
+   
+   
   return newGroup; 
 }
 
@@ -188,9 +194,9 @@ void displayListGroup (const element_group *eg){
   element_group *current = eg->next;
   
   printf ("\nLENGTH LIST: %d\n", eg->size);
-  printf ("MEMBERS: \n");
+  printf ("MEMBERS OF LIST: \n");
   while(current != NULL){
-     printf("color: %c ", current->grp.color);
+   //  printf("color of group: %c ", current->grp.color);
      displayGroup(&current->grp);
      current = current->next;
   }
@@ -201,6 +207,29 @@ void displayListGroup (const element_group *eg){
  * Role: return 1 if g1 and g2 have at least one node in common *
  ****************************************************************/
 int adjacentGroup (const group *g1, const group *g2){
+  element* current_group1 = g1->head;
+  int adjacent = 0;
+ 
+  while (current_group1 != NULL && !adjacent){
+    element *current_group2 = g2->head;
+    while (current_group2 != NULL && !adjacent){
+        element *current_node = g2->head->n.head;
+        while (current_node != NULL && !adjacent){
+    if (current_group1->n.id == current_node->n.id)
+      adjacent++;
+    current_node = current_node->next;
+        }
+      current_group2 = current_group2->next;
+    }
+    current_group1 = current_group1->next;
+  }
+  return adjacent;
+}
+
+/******************************************************************************
+ * Role: return '.' if no winner found or 'o' or 'x' depending on the winner  *
+ ******************************************************************************/
+int adjacentGroup2 (const group *g1, const group *g2){
   element* current1 = g1->head;
   int adjacent = 0;
   
@@ -215,87 +244,73 @@ int adjacentGroup (const group *g1, const group *g2){
   }
   return adjacent;
 }
-
 /**************************************************************
  * Role: Merge groups of the list if they have the same color *
  * eg : the list to update 		         	            *
  **************************************************************/
 void updateListGroup (element_group *eg){
-  
+
   while (eg != NULL){
+
      element_group *current = eg->next;
      while(current != NULL){
-        if (eg->grp.color == current->grp.color && adjacentGroup(&eg->grp, &current->grp)){
-            
-             displayGroup(&current->grp);
-            fusion(&eg->grp, &current->grp);
-           
-          //destroyElemGroup(current);
-            updateListGroup(eg);
-        }
-       
-        current = current->next;
+  
+        if (adjacentGroup(&eg->grp, &current->grp)||adjacentGroup(&current->grp,&eg->grp)||adjacentGroup2(&current->grp,&eg->grp)){
+	    fusion(&eg->grp, &current->grp);
+        }       
+        current = current->next;  
     }
     eg = eg->next;
   }
-  
 }
 
-
-
-
-char winning_group(element_group* eg){
-    
+/******************************************************************************
+ * Role: return '.' if no winner found or 'o' or 'x' depending on the winner  *
+ ******************************************************************************/
+char winning_group(const element_group *eg){
     bool noeud_deb_o = false;
     bool noeud_fin_o = false;
     bool noeud_deb_x = false;
     bool noeud_fin_x = false;
-    while(eg != NULL)
-    {
-        while(eg->grp.head != NULL)
-        {
-            if(eg->grp.head->n.id == 1000) {
+    if(eg == NULL){
+      return '.';
+    }
+    
+   element_group *current_group=eg->next;
+
+    while (current_group!=NULL){
+     
+    element* current=current_group->grp.head;
+           while(current != NULL){
+
+            if(current->n.id == 1000) {
                 noeud_deb_o = true;
             }
-            if(eg->grp.head->n.id == 1001) {
+            if(current->n.id == 1001) {
                 noeud_fin_o = true;
             }
-            if(eg->grp.head->n.id == 2000) {
+            if(current->n.id == 2000) {
                 noeud_deb_x = true;
             }
-            if(eg->grp.head->n.id == 2001) {
+            if(current->n.id == 2001) {
                 noeud_fin_x = true;
             }
-            eg->grp.head = eg->grp.head->next;
-        }
-
-        if(noeud_deb_o && noeud_fin_o) {
+             if(noeud_deb_o && noeud_fin_o) {
             return 'o';
-        }
+	    }
         else if(noeud_deb_x && noeud_fin_x) {
             return 'x';
         }
-
-        noeud_deb_o = false;
+	    current=current->next;
+	   }
+	noeud_deb_o = false;
         noeud_fin_o = false;
         noeud_deb_x = false;
         noeud_fin_x = false;
 
-        eg = eg->next;
-    }
+      current_group = current_group->next;
+	}	
     return '.';
 }
 
-int winner(element_group* eg){
-    
-    char win = winning_group(eg);
-    if(win == 'o') {
-        printf("White player won the game !\n");
-        return 1;
-    }
-    else if(win == 'x') {
-        printf("Black player won the game !\n");
-        return 2;
-    }
-    return 0;
-}
+

@@ -6,134 +6,71 @@
 
 
 int main (){
-       
-    char win;
-  element_group *eg = createListGroup();
-  group* groupToAdd = createGroup('o');
-  group* groupToAdd2 = createGroup('o');
-  group* groupToAdd3 = createGroup('x');
-  
-  node * n = createNode(2);
-  node * n2 = createNode(3);
-  node * n3 = createNode(4);
-  node * n5 = createNode(5);
-  node * B1 = createNode(1000);
-  node * B2 = createNode(1001);
-  addToGroup(groupToAdd, n);
-  addToGroup(groupToAdd, n2);
-  addToGroup(groupToAdd2, n);
-  addToGroup(groupToAdd,B1);
-  addToGroup(groupToAdd2,B2);
-  
-   addToGroup(groupToAdd2, n3);
-   addToGroup(groupToAdd3, n5);
-   addToGroup(groupToAdd3, n2);
-   
-   
-  insertElemGroup (eg, groupToAdd);
-  insertElemGroup (eg, groupToAdd2);
-  insertElemGroup (eg, groupToAdd3);
-  
-  
 
-  printf("adjacent: %d\n", adjacentGroup(groupToAdd, groupToAdd2));
-  //printf("adjacent: %d\n", adjacentGroup(groupToAdd, groupToAdd3));
- printf ("\nDisp list group\n");
-  displayListGroup(eg);
-  
-  updateListGroup(eg);
-  printf ("Apres update\n");
-  displayListGroup(eg);
-  
-  win=winning_group(eg);
-printf ("Le gagnant est '%c' \n",win);  
-
-    //B1 = 1000 TOP = 'o'
-    //B2 = 1001 BOT = 'o'
-    //W1,W2 = LEFT,RIGHT = 2000,2001= 'x'
-    int joueur=1;
-    int tour =1;
-    board b=createBoard(4);
-    displayBoard(&b);
-    
-    element_group *J1=createListGroup();    
-    element_group *J2=createListGroup();
-    element_group *current;
-    
-    char winning='.';
-   
-   while(winning=='.'){ 
-       
-       if(joueur==1){
-           current=J1; //joueur= X
-       }else{
-           current=J2; //joueur= O
-       }
-     jouer_coup(&b,&joueur,&tour,current);
-     
-     displayListGroup(current);
-     displayBoard(&b);    
-     
-      winning=winning_group(current);
-
-  
-       
-      
-}
-    
-    
-    
-    
+startGame();
 
 return 0;
+}
+
+
+
+
+
+/* TEST GROUP */
+//   group* g1=createGroup('o');
+//   group* g2=createGroup('o');
+//   group* g3=createGroup('o');
+//   group* g4=createGroup('o');
+//   node *n1=createNode(2);
+//   node *n2=createNode(3);
+//   node *n3=createNode(5);
+//   node *n4=createNode(6);
+//   
+//   addEdge(n1,n2);
+//   addEdge(n3,n4);
+//   addEdge(n4,n3);
+//   
+//   addToGroup(g1,n1);
+//   addToGroup(g1,n2);
+//   addToGroup(g1,n3);
+//   addToGroup(g2,n4);
+//   addToGroup(g3,n3);
+//   addToGroup(g4,n1);
+//   addToGroup(g4,n2);
+//   
+//   int test;
+//     printf("Test : Doit être Correct\n");
+//     test=adjacentGroup(g1,g2);
+//     printf("test = %d\n",test);
+//   
+//     printf("Test : Doit être Faux car Head g2 : n3=(5)->n4=(6) et head g4 : n1=(2), n2=(3) \n");
+//     test=adjacentGroup(g2,g4);
 //     
-} 
-
-    /*TEST GROUP*
-        
-    char win;
-  element_group *eg = createListGroup();
-  group* groupToAdd = createGroup('o');
-  group* groupToAdd2 = createGroup('o');
-  group* groupToAdd3 = createGroup('x');
-  
-  node * n = createNode(2);
-  node * n2 = createNode(3);
-  node * n3 = createNode(4);
-  node * n5 = createNode(5);
-  node * B1 = createNode(1000);
-  node * B2 = createNode(1001);
-  addToGroup(groupToAdd, n);
-  addToGroup(groupToAdd, n2);
-  addToGroup(groupToAdd2, n);
-  addToGroup(groupToAdd,B1);
-  addToGroup(groupToAdd2,B2);
-  
-   addToGroup(groupToAdd2, n3);
-   addToGroup(groupToAdd3, n5);
-   addToGroup(groupToAdd3, n2);
-   
-   
-  insertElemGroup (eg, groupToAdd);
-  insertElemGroup (eg, groupToAdd2);
-  insertElemGroup (eg, groupToAdd3);
-  
-  
-
-  printf("adjacent: %d\n", adjacentGroup(groupToAdd, groupToAdd2));
-  //printf("adjacent: %d\n", adjacentGroup(groupToAdd, groupToAdd3));
- printf ("\nDisp list group\n");
-  displayListGroup(eg);
-  
-  updateListGroup(eg);
-  printf ("Apres update\n");
-  displayListGroup(eg);
-  
-  win=winning_group(eg);
-printf ("Le gagnant est '%c' \n",win);  
-    
-    
-*/
+//    printf("test = %d\n",test);
+//  
+//    
+//    //fusion(g1,g2);
+//    printf("\nAffiche G1 : (Ajout de g2 dans G1)");
+//    displayGroup(g1);
+//    printf(" le noeud n4=6 a bien été ajouté dans g1\n");
+//    
+//    
+//    
+//    
+//    
+//      element_group *eg = createListGroup();
+//      insertElemGroup(eg,g1); //n1 n2 n3
+//      insertElemGroup(eg,g2); //n4
+//     // insertElemGroup(eg,g3); 
+//     // insertElemGroup(eg,g4); 
+//      
+//      
+//      displayListGroup(eg);
+//     // element_group* tab=updateListGroup(eg);
+//      printf("UPDATED : \n");
+//      displayListGroup(eg);
+//    
+//      
  
 
 

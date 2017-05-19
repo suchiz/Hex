@@ -86,13 +86,19 @@ void linkGraph (graph *g){
   for (i = 0; i < g->nb_nodes; i = i + n) 	// link left and right borders
   {
     addEdge(&g->grph[i], W1);
+    addEdge(W1,&g->grph[i]);
     addEdge(&g->grph[i + n - 1], W2);
+    addEdge(W2,&g->grph[i + n - 1]);
   }
-  for (i = 0; i < n; i++)		// link top border
+  
+  for (i = 0; i < n; i++){		// link top border
     addEdge(&g->grph[i], B1);
-  for (i = g->nb_nodes; i > g->nb_nodes - n; i--)		// link bot border
-    addEdge(&g->grph[i], B2);
-    
+    addEdge(B1,&g->grph[i]);
+  }
+  for (i = g->nb_nodes; i > g->nb_nodes - n; i--){		// link bot border
+    addEdge(&g->grph[i-1], B2);
+    addEdge(B2,&g->grph[i-1]);
+  }
   // GENERIC
   for (i = 0; i < g->nb_nodes; i++)
     for (j = (i / n) - 1; j <= (i / n) + 1; j++)   //j = row
@@ -101,6 +107,7 @@ void linkGraph (graph *g){
 	if ((j == (i/n) - 1 && k == (i%n)) || (j == (i/n) - 1 && k == (i%n) + 1) || (j == (i/n) && k == (i%n) - 1) ||
 	    (j == (i/n) && k == (i%n) + 1) || (j == (i/n) + 1 && k == (i%n) - 1) || (j == (i/n) + 1 && k == (i%n)))
 	  addEdge(&g->grph[i], &g->grph[n * j + k]);
+	
 	
 }
 
