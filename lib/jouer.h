@@ -5,6 +5,10 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
+#include <string.h>
+#include <dirent.h>
+#include <sys/types.h>
+
 
 #include "board.h"
 #include "group.h"
@@ -57,5 +61,18 @@ void pop(stack *stack);
 
 void displayStack(stack* stack);
 
-stack* undo(board *b,stack *stack);
+int undo(board *b,stack *stack);
+
+void save(board *b);
+
+board load(int *joueur,int* tour);
+
+void menu();
+
+void inGameMenu(board *b,stack* stack, int *joueur, int *tour, element_group *eg);
+
+void loadGame();
+
+
+int saisie(board *b,stack* stack, int *joueur, int *tour, element_group *eg);
 #endif

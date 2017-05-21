@@ -9,19 +9,19 @@
 /********************
  * ERROR DEFINITION *
  ********************/
-#define OK		0
-#define ERR_CREATE_NODE	1
+#define OK			0
+#define ERR_CREATE_NODE		1
 #define ERR_CREATE_GROUP	2
 #define ERR_CREATE_ELEMENT	3
 #define ERR_CREATE_GRAPH	4
-#define ERR_ADD_EDGE	5
-
+#define ERR_ADD_EDGE		5
+#define ERR_CREATE_DATA		6
 /***********************
  * STRUCTURE OF A NODE *
  ***********************/
 typedef struct node_s // Case = hexagone = node = summit
 {
-    char color;		// white 'x', black 'o', or empty '.'
+    char color;		// black 'x', white 'o', or empty '.'
     int id;        		// identity of the node = coordonate in the graph
     int nb_members;       	// numbers of edges
     struct element_s *head;     	// list of adjacents nodes

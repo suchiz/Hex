@@ -10,13 +10,13 @@
 /********************
  * ERROR DEFINITION *
  ********************/
-#define OK		0
-#define ERR_CREATE_NODE	1
+#define OK			0
+#define ERR_CREATE_NODE		1
 #define ERR_CREATE_GROUP	2
 #define ERR_CREATE_ELEMENT	3
 #define ERR_CREATE_GRAPH	4
-#define ERR_ADD_EDGE	5
-
+#define ERR_ADD_EDGE		5
+#define ERR_CREATE_DATA		6
 /************************
  * STRUCTURE OF A GROUP *
  ************************/
@@ -121,6 +121,9 @@ int adjacentGroup2 (const group *g1, const group *g2);
  * Role: return '.' if no winner found or 'o' or 'x' depending on the winner  *
  ******************************************************************************/
 char winning_group(const element_group *eg);
+
+
+void undoListGroup (element_group *eg, int ind);
 
 
 #endif
