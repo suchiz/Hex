@@ -314,3 +314,33 @@ char winning_group(const element_group *eg){
 }
 
 
+
+void undoListGroup (element_group *eg,int ind){
+  
+   element_group *current_group=eg->next;
+  
+    while (current_group!=NULL){
+     
+    element* current=current_group->grp.head;
+           while(current != NULL){
+
+	      if(current->n.id == ind) {
+                current->n.id=-1;;
+	      }
+	      if(current->n.id == 2001) {
+                current->n.id=-1;
+	      }
+            
+	      if(current->n.id == 2000) {
+                current->n.id=-1;
+	      }
+	    current=current->next;
+	   }
+      updateListGroup(current_group);	     
+      current_group = current_group->next;
+	}
+	
+}
+
+
+

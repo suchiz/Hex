@@ -7,11 +7,7 @@
 
 int main (){
 
-  /*TODO   SUPPRIMER LA CASE UNDO DANS LA LISTE DES GROUPES */ 
-  
-  startGame();
-
-  
+menu();
 return 0;
 }
 
