@@ -45,6 +45,8 @@ typedef struct element_data_s{
 
 }element_data;
 
+bool isEmptyStack (const stack *s);
+
 int coordonnee(const board* b,int x,int y);
 
 int coup_valide(const board *b, int x, int y, int ind);

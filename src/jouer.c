@@ -34,8 +34,11 @@ int saisie(board *b,stack* stack, int *joueur, int *tour, element_group *eg){
   int ind;
 
   do{
-    printf ("\n \n Tour : %d (joueur %d)\n", *tour,*joueur);
-
+   
+    if (*joueur == 0)
+      printf ("\n \n Tapez 0 pour ouvrir le menu\nTour : %d (joueur %d)\n", *tour,*joueur +2);
+    else
+      printf ("\n \n Tapez 0 pour ouvrir le menu\nTour : %d (joueur %d)\n", *tour,*joueur);
     printf ("\nLigne : ");
     scanf ("%d", &x);
 
@@ -102,6 +105,7 @@ void startGame(){
 	}
 	
      jouer_coup(&b,&stack,&joueur,&tour,current);
+     
      displayBoard(&b);
      winner=winning_group(current);
       }
@@ -174,15 +178,20 @@ void displayStack(stack* stack)
 	
 }
 
+bool isEmptyStack (const stack *s){
+ return s->size == 0 && s->first == NULL; 
+}
+
 int undo(board *b,stack *stack){
-  
-  int x=stack->first->x;
-  int y=stack->first->y;
-  int ind=coordonnee(b,x,y);
-  printf ("\nUndo [Line : %d / Column : %d]\n",x,y);
-  b->brd.grph[ind].color='.';
-  displayBoard(b);
-  pop(stack);
+ 
+    int x=stack->first->x;
+    int y=stack->first->y;
+    int ind=coordonnee(b,x,y);
+    printf ("\nUndo [Line : %d / Column : %d]\n",x,y);
+    b->brd.grph[ind].color='.';
+    displayBoard(b);
+    pop(stack);
+ 
 return ind;
 }
 
@@ -389,10 +398,15 @@ void inGameMenu(board *b,stack* stack, int *joueur, int *tour, element_group *eg
 				break;
 			
 			case 3 : 
+				  if (!isEmptyStack(stack)){
 				  undo1=undo(b,stack);
 				 undoListGroup(eg,undo1);
 				 (*joueur) = ((*joueur) + 1) % 2;
 				 (*tour)--;
+				  } else{
+				    displayBoard(b);
+				    printf("\nAucun coup n'a été joué");
+				  }
 				  
 				  break;
 			case 4 : startGame();

@@ -34,4 +34,4 @@ $(EXEC): $(STRUCT_O) main.o
 
 
 clean:
-	rm -rf $(OBJDIR)/*.o $(EXEC)
+	rm -rf $(OBJDIR)/*.o $(EXEC) save/*.txt
