@@ -169,12 +169,14 @@ void loadGame(){
      
       while(winner=='.'){
 	if(joueur==1){
+	 printf ("\n \n Tour : %d (joueur %d ['o']->W) [Accès menu = 0]\n", tour,joueur+1);
 	current=J1;
+	jouer_coup(&b,&stack,&joueur,&tour,current, J2);
 	}else{
+	   printf ("\n \n Tour : %d (joueur %d ['o']->W) [Accès menu = 0]\n", tour,joueur+1);
 	current=J2;
+	jouer_coup(&b,&stack,&joueur,&tour,current, J1);
 	}
-	
-     jouer_coup(&b,&stack,&joueur,&tour,current);
      displayBoard(&b);
      winner=winning_group(current);
       }

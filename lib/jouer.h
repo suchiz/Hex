@@ -49,7 +49,7 @@ int coup_valide(const board *b, int x, int y, int ind);
  * tour : turn played by the player				 *
  * eg : list containing the groups of nodes of the current player* 
  *****************************************************************/
-int saisie(board *b,stack* stack, int *joueur, int *tour, element_group *eg);
+int saisie(board *b,stack* stack, int *joueur, int *tour, element_group *eg1, element_group *eg2);
 
 
 
@@ -61,7 +61,7 @@ int saisie(board *b,stack* stack, int *joueur, int *tour, element_group *eg);
  * tour : turn played by the player				 *
  * eg : list containing the groups of nodes of the current player* 
  *****************************************************************/
-void jouer_coup(board *b,stack* stack, int *joueur, int *tour, element_group *eg);
+void jouer_coup(board *b,stack* stack, int *joueur, int *tour, element_group *eg1, element_group *eg2);
 
 /****************************
  * Role: start a new game   *

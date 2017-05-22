@@ -49,7 +49,7 @@ int coup_valide(const board *b, int x, int y, int ind){
  * tour : turn played by the player				 *
  * eg : list containing the groups of nodes of the current player* 
  *****************************************************************/
-int saisie(board *b,stack* stack, int *joueur, int *tour, element_group *eg){
+int saisie(board *b,stack* stack, int *joueur, int *tour, element_group *eg1, element_group *eg2){
     int x, y;
     int ind;
   do{
@@ -58,14 +58,14 @@ int saisie(board *b,stack* stack, int *joueur, int *tour, element_group *eg){
     scanf ("%d", &x);
 
     if (x==0)
-      inGameMenu(b,stack,joueur,tour,eg);
+      inGameMenu(b,stack,joueur,tour,eg1, eg2);
 	
     if(x!=0){  
     printf("\nColonne : ");
     scanf ("%d", &y);
     }
    if(y==0)
-      inGameMenu(b,stack,joueur,tour,eg);
+      inGameMenu(b,stack,joueur,tour,eg1, eg2);
       
     ind = coordonnee(b, x, y);
   }while (!coup_valide(b, x, y, ind));
@@ -82,9 +82,9 @@ int saisie(board *b,stack* stack, int *joueur, int *tour, element_group *eg){
  * tour : turn played by the player				 *
  * eg : list containing the groups of nodes of the current player* 
  *****************************************************************/
-void jouer_coup(board *b,stack* stack, int *joueur, int *tour, element_group *eg){
+void jouer_coup(board *b,stack* stack, int *joueur, int *tour, element_group *eg1, element_group *eg2){
    
-int ind =saisie(b,stack,joueur,tour,eg);
+int ind =saisie(b,stack,joueur,tour,eg1,eg2);
   if (*joueur == 1)
     b->brd.grph[ind].color = 'x';
   else
@@ -92,8 +92,8 @@ int ind =saisie(b,stack,joueur,tour,eg);
   
  
   group *g = generateGroup(b, &b->brd.grph[ind]);
-  insertElemGroup(eg, g);
-  updateListGroup(eg);
+  insertElemGroup(eg1, g);
+  updateListGroup(eg1);
   
   (*joueur) = ((*joueur) + 1) % 2;
   (*tour)++;
@@ -127,23 +127,22 @@ void startGame(){
     createStack(&stack);
     
      element_group *J1=createListGroup();    
-   //  element_group *J2=createListGroup();
+     element_group *J2=createListGroup();
      element_group* current;
      displayBoard(&b);
      
       while(winner=='.'){
 	if(joueur==1){
-
-	current=J1;
-	 printf ("\n \n Tour : %d (joueur %d ['x']->B) [Accès menu = 0]\n", tour,joueur+1);
-	 
-      jouer_coup(&b,&stack,&joueur,&tour,J1);
-	}else{
-	current=J1;
 	 printf ("\n \n Tour : %d (joueur %d ['o']->W) [Accès menu = 0]\n", tour,joueur+1);
-      jouer_coup(&b,&stack,&joueur,&tour,J1);
+	current=J1;
+	jouer_coup(&b,&stack,&joueur,&tour,current, J2);
+	}else{
+	   printf ("\n \n Tour : %d (joueur %d ['o']->W) [Accès menu = 0]\n", tour,joueur+1);
+	current=J2;
+	jouer_coup(&b,&stack,&joueur,&tour,current, J1);
 	}
      
+
       
       
       displayListGroup(current);

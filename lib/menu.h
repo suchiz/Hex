@@ -35,6 +35,6 @@ void menu();
  * turn : back to te previous turn if 'undo'						  *
  * eg : delete the node in the list of group of the player who played			  * 
  ******************************************************************************************/
- void inGameMenu(board *b,stack* stack, int *joueur, int *tour, element_group *eg);
+ void inGameMenu(board *b,stack* stack, int *joueur, int *tour, element_group *eg1, element_group *eg2);
 
 #endif
