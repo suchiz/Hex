@@ -38,7 +38,7 @@ typedef struct element_group_s
 } element_group;
 
 /******************************
- * Role: Create a new group 	*
+ * Role: Create a new group   *
  * color : color of the group *
  ******************************/
 group* createGroup (const char color);

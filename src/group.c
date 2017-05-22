@@ -315,25 +315,50 @@ char winning_group(const element_group *eg){
 
 
 
+
+
 void undoListGroup (element_group *eg,int ind){
-  
+
    element_group *current_group=eg->next;
   
     while (current_group!=NULL){
      
     element* current=current_group->grp.head;
            while(current != NULL){
+	     element* current_node = current->n.head;
+	      while(current_node != NULL){
 
-	      if(current->n.id == ind) {
-                current->n.id=-1;;
-	      }
-	      if(current->n.id == 2001) {
-                current->n.id=-1;
+	      
+	      
+	      if(current_node->n.id == 2001 && current->n.id== ind) {
+		
+               printf ("il faut supprimer 2001 du groupe du groupe courant");
 	      }
             
-	      if(current->n.id == 2000) {
+	      if(current_node->n.id == 2000 && current->n.id== ind) {
+                printf ("il faut supprimer 2000 du groupe courrant\n");
+		
+	      }
+	      
+	        if(current_node->n.id == 1001 && current->n.id== ind) {
+                printf ("ilfaut supprimer 1001 du groupe courrant\n");
+	      }
+            
+	      if(current_node->n.id == 1000 && current->n.id== ind) {
+                printf ("ilfaut supprimer 1000 du groupe courrant\n");
+
+	      }
+	      
+	      
+	      
+	      
+	      current_node = current_node->next;
+	      }
+	      
+	      if(current->n.id == ind) {
                 current->n.id=-1;
 	      }
+	      
 	    current=current->next;
 	   }
       updateListGroup(current_group);	     

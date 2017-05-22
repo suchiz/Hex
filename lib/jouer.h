@@ -5,13 +5,12 @@
 #include <stdio.h>
 #include <math.h>
 #include <stdbool.h>
-#include <string.h>
-#include <dirent.h>
-#include <sys/types.h>
-
 
 #include "board.h"
 #include "group.h"
+#include "save.h"
+#include "stack.h"
+#include "menu.h"
 
 /********************
  * ERROR DEFINITION *
@@ -23,58 +22,61 @@
 #define ERR_CREATE_GRAPH	4
 #define ERR_ADD_EDGE		5
 #define ERR_CREATE_DATA		6
-/**********************
- * STRUCTURE OF STACK *
- **********************/
-typedef struct stack_s
 
-{
-  int size;
- struct element_data_s *first;
-}stack;
-
-/*********************
- * STRUCTURE OF DATA *
- *********************/
-typedef struct element_data_s{
-    int turn;
-    int player;
-    int x;
-    int y;
-    struct element_data_s *next;
-
-}element_data;
-
-bool isEmptyStack (const stack *s);
-
+/**********************************************************
+ * Role: return the node where the player want to play    *
+ * b : current board	   				  *
+ * x : line of the node on the board 			  *
+ * y : column of the node on the board			  *
+ **********************************************************/
 int coordonnee(const board* b,int x,int y);
 
+/*********************************************************************
+ * Role: return 0 if the player is allowed to play the node picked   *
+ * b : current board          	     		       		     *
+ * x : line of the node on the board 			  	     *
+ * y : column of the node on the board				     *
+ *ind : number of the node found by int coordonnee and x,y	     *
+ *********************************************************************/
 int coup_valide(const board *b, int x, int y, int ind);
 
+
+/*****************************************************************
+ * Role: Seizure of the player (line / column of the node or menu*
+ * b : current board           				         *
+ * stack : stack where the data is pushed		  	 *
+ * joueur : player who played					 *
+ * tour : turn played by the player				 *
+ * eg : list containing the groups of nodes of the current player* 
+ *****************************************************************/
+int saisie(board *b,stack* stack, int *joueur, int *tour, element_group *eg);
+
+
+
+/*****************************************************************
+ * Role: change the color of the node depending on the player    *
+ * b : current board             				 *
+ * stack : stack where the data is pushed		  	 *
+ * joueur : player who played					 *
+ * tour : turn played by the player				 *
+ * eg : list containing the groups of nodes of the current player* 
+ *****************************************************************/
 void jouer_coup(board *b,stack* stack, int *joueur, int *tour, element_group *eg);
 
+/****************************
+ * Role: start a new game   *
+ ****************************/
 void startGame();
 
-void createStack (stack* stack);
-
-void push(stack *stack, int turn, int player,int x,int y);
-
-void pop(stack *stack);
-
-void displayStack(stack* stack);
-
+/*******************************************************************
+ * Role: undo the last node played and back to the previous turn   *
+ * b : current board						   *
+ * stack : stack containing the data so the last node played	   *
+ * joueur : back to the previous player 		       	   *
+ * turn : back to te previous turn			     	   *
+ * eg : delete the node in the list of group of the player who undo*
+ *******************************************************************/
 int undo(board *b,stack *stack);
 
-void save(board *b);
 
-board load(int *joueur,int* tour);
-
-void menu();
-
-void inGameMenu(board *b,stack* stack, int *joueur, int *tour, element_group *eg);
-
-void loadGame();
-
-
-int saisie(board *b,stack* stack, int *joueur, int *tour, element_group *eg);
 #endif
